@@ -2,6 +2,7 @@
 # define CONTACT_HPP
 
 #include <string>
+#include <iomanip>
 
 class Contact {
 private:
@@ -12,12 +13,7 @@ private:
 	std::string	darkestSecret;
 
 public:
-	Contact() :
-		firstName(""),
-		lastName(""),
-		nickName(""),
-		phoneNumber(""),
-		darkestSecret("") {}
+	Contact();
 
 	// GETTERS
 	std::string	getFirstName()	const;
