@@ -2,6 +2,7 @@
 # define CONTACT_HPP
 
 #include <string>
+#include <iostream>
 #include <iomanip>
 
 class Contact {
@@ -28,6 +29,9 @@ public:
 	void	setNickName(std::string nickName);
 	void	setPhoneNumber(std::string phoneNumber);
 	void	setDarkestSecret(std::string darkestSecret);
+
+	int		checkNotEmpty() const;
+	void	printContact() const;
 };
 
 

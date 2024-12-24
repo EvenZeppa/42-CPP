@@ -9,6 +9,14 @@ static std::string truncateWithDot(const std::string& str) {
 
 PhoneBook::PhoneBook() : i(0) {}
 
+Contact	PhoneBook::getContact(int index) {
+	return contacts[index];
+}
+
+int	PhoneBook::getIndex() const {
+	return this->i;
+}
+
 void	PhoneBook::incrementIndex() {
 	this->i++;
 	if (this->i == 8)

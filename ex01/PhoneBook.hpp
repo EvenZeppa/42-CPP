@@ -12,6 +12,9 @@ private:
 public:
 	PhoneBook();
 
+	Contact	getContact(int index);
+	int		getIndex() const;
+
 	void	incrementIndex();
 	void	addContact(Contact contact);
 	void	printContacts();
