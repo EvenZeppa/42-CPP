@@ -11,11 +11,16 @@ private:
 	void	warning(void);
 	void	error(void);
 
+	std::string levels[4];
+
 public:
 	Harl();
+	Harl(std::string debugStr, std::string infoStr, std::string warningStr, std::string errorStr);
 	~Harl();
 
+	int		getLevelI(std::string level);
 	void	complain(std::string level);
+	void	harlFilter(std::string level);
 };
 
 #endif

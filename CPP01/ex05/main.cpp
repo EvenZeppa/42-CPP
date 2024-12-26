@@ -2,7 +2,7 @@
 
 int	main()
 {
-	HARL	harl;
+	Harl	harl;
 
 	harl.complain("DEBUG");
 	harl.complain("INFO");
