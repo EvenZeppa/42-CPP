@@ -1,5 +1,5 @@
 CCPP = c++
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -Wshadow -Wno-shadow
 SRCS = main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp DiamondTrap.cpp
 NAME = diamondTrap
 
