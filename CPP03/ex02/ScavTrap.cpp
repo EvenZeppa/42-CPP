@@ -10,6 +10,9 @@ ScavTrap::ScavTrap(std::string newName) : ClapTrap(newName)
 
 ScavTrap::ScavTrap(ScavTrap& scavTrap) : ClapTrap(scavTrap.name)
 {
+	this->hitPoints = scavTrap.hitPoints;
+	this->energyPoints = scavTrap.energyPoints;
+	this->attackDamage = scavTrap.attackDamage;
 	std::cout << "ScavTrap " << name << " copied" << std::endl;
 }
 
