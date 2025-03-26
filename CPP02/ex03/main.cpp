@@ -2,56 +2,6 @@
 #include <iostream>
 #include <optional>
 
-// Point getTriangleBarycentre(Point const a, Point const b, Point const c)
-// {
-// 	Fixed x = (a.getX() + b.getX() + c.getX()) / 3;
-// 	Fixed y = (a.getY() + b.getY() + c.getY()) / 3;
-
-// 	Point barycentre(x.toFloat(), y.toFloat());
-
-// 	return (barycentre);
-// }
-
-// std::optional<Point>	findIntersection(Point const a, Point const b, Point const c, Point const d)
-// {
-// 	Fixed	denominator((a.getX() - b.getX()) * (c.getY() - d.getY()) - (a.getY() - b.getY()) * (c.getX() - d.getX()));
-
-// 	if (denominator == 0)
-// 		return (std::nullopt);
-	
-// 	Fixed t = ((a.getX() - c.getX()) * (c.getY() - d.getY()) - (a.getY() - c.getY()) * (c.getX() - d.getX())) / denominator;
-// 	Fixed u = ((a.getX() - c.getX()) * (a.getY() - b.getY()) - (a.getY() - c.getY()) * (a.getX() - b.getX())) / denominator;
-
-// 	std::cout << "T: " << t << std::endl;
-// 	std::cout << "U: " << u << std::endl;
-
-// 	if (!(t <= 1 && t >= 0 && u <= 1 && u >= 0))
-// 		return (std::nullopt);
-
-// 	Point	point((a.getX() + (t * (b.getX() - a.getX()))).toFloat(), (a.getY() + (t * (b.getY() - a.getY()))).toFloat());
-
-// 	return (point);
-// }
-
-// bool bsp(Point const a, Point const b, Point const c, Point const point)
-// {
-// 	Point	barycentre = getTriangleBarycentre(a, b, c);
-
-// 	std::cout << "Barycentre: " << barycentre << std::endl;
-
-// 	std::optional<Point>	interAB = findIntersection(barycentre, point, a, b);
-// 	std::optional<Point>	interBC = findIntersection(barycentre, point, b, c);
-// 	std::optional<Point>	interCA = findIntersection(barycentre, point, c, a);
-
-// 	std::cout << "InterAB: " << interAB.has_value() << std::endl;
-// 	std::cout << "InterBC: " << interBC.has_value() << std::endl;
-// 	std::cout << "InterCA: " << interCA.has_value() << std::endl;
-
-// 	if (!interAB && !interBC && !interCA)
-// 		return (1);
-// 	return (0);
-// }
-
 bool bsp(Point const a, Point const b, Point const c, Point const point)
 {
 	// Vecteurs
@@ -83,9 +33,22 @@ int main()
 	Point p1(0, 0);
 	Point p2(5, 0);
 	Point p3(2, 5);
-	Point p4(2, 4);
 
-	std::cout << bsp(p1, p2, p3, p4) << std::endl;
+	// Point à l'intérieur du triangle
+	Point inside(2, 2);
+	std::cout << "Point (2, 2) inside triangle: " << bsp(p1, p2, p3, inside) << std::endl;
+
+	// Point à l'extérieur du triangle
+	Point outside(6, 6);
+	std::cout << "Point (6, 6) outside triangle: " << bsp(p1, p2, p3, outside) << std::endl;
+
+	// Point sur un bord du triangle
+	Point onEdge(2.5, 2.5);
+	std::cout << "Point (2.5, 2.5) on edge of triangle: " << bsp(p1, p2, p3, onEdge) << std::endl;
+
+	// Point sur un sommet du triangle
+	Point onVertex(0, 0);
+	std::cout << "Point (0, 0) on vertex of triangle: " << bsp(p1, p2, p3, onVertex) << std::endl;
 
 	return 0;
 }

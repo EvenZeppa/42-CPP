@@ -2,7 +2,7 @@
 #include "ClapTrap.hpp"
 
 
-ClapTrap::ClapTrap(std::string newName) : name(newName)
+ClapTrap::ClapTrap(std::string newName) : name(newName), hitPoints(10), energyPoints(10), attackDamage(0)
 {
 	std::cout << "ClapTrap " << name << " created" << std::endl;
 }

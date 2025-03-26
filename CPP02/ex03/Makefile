@@ -1,5 +1,5 @@
 CPP = c++
-# CPP_FLAGS = -Wall -Wextra -Werror
+CPP_FLAGS = -Wall -Wextra -Werror -std=c++98
 CPP_FLAGS = 
 SRCS = main.cpp Fixed.cpp Point.cpp
 NAME = bsp
