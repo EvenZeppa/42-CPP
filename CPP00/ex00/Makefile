@@ -1,5 +1,5 @@
-CPP = g++
-CPP_FlAGS = -Wall -Wextra -Werror
+CPP = c++
+CPP_FlAGS = -Wall -Wextra -Werror -std=c++98
 NAME = megaphone
 
 all: $(NAME)

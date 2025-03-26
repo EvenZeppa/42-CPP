@@ -1,4 +1,5 @@
 #include <cstring>
+#include <sstream>
 #include "PhoneBook.hpp"
 #include "Contact.hpp"
 
@@ -6,6 +7,7 @@ int	main() {
 	PhoneBook	phoneBook;
 	Contact		contact;
 	char		input[32];
+	int			inputInt;
 
 	contact.setFirstName("John");
 	contact.setLastName("Doe");
@@ -58,11 +60,13 @@ int	main() {
 			phoneBook.printContacts();
 			std::cout << "Enter index: ";
 			std::cin >> input;
-			if (std::atoi(input) < 1 || std::atoi(input) > phoneBook.getIndex()) {
+			std::istringstream iss(input);
+
+			if (!(iss >> inputInt) || inputInt < 1 || inputInt > phoneBook.getIndex()) {
 				std::cout << "Invalid index" << std::endl;
 				continue;
 			}
-			phoneBook.getContact(std::atoi(input) - 1).printContact();
+			phoneBook.getContact(inputInt - 1).printContact();
 		}
 		else {
 			std::cout << "Invalid command" << std::endl;

@@ -9,11 +9,11 @@ int	main(int argc, char *argv[])
 	std::string s1 = argv[2];
 	std::string s2 = argv[3];
 
-	std::ifstream file(fileName);
+	std::ifstream file(fileName.c_str());
 	if (!file.is_open())
 		return (std::cout << "Error: could not open file !" << std::endl, 1);
 
-	std::ofstream outFile(fileName + ".replace");
+	std::ofstream outFile((fileName + ".replace").c_str());
 	if (!outFile.is_open())
 		return (std::cout << "Error: could not create output file !" << std::endl, 1);
 
