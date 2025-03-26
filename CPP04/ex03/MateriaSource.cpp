@@ -4,7 +4,7 @@ MateriaSource::MateriaSource()
 {
 	std::cout << "MateriaSource default constructor called" << std::endl;
 	for (int i = 0; i < 4; i++)
-		inventory[i] = nullptr;
+		inventory[i] = NULL;
 }
 
 MateriaSource::MateriaSource(MateriaSource& materiaSource)
@@ -15,7 +15,7 @@ MateriaSource::MateriaSource(MateriaSource& materiaSource)
 		if (materiaSource.inventory[i])
 			inventory[i] = materiaSource.inventory[i]->clone();
 		else
-			inventory[i] = nullptr;
+			inventory[i] = NULL;
 	}
 }
 
@@ -29,7 +29,7 @@ MateriaSource& MateriaSource::operator=(MateriaSource& materiaSource)
 		if (materiaSource.inventory[i])
 			inventory[i] = materiaSource.inventory[i]->clone();
 		else
-			inventory[i] = nullptr;
+			inventory[i] = NULL;
 	}
 
 	return (*this);
@@ -62,5 +62,5 @@ AMateria* MateriaSource::createMateria(std::string const& type)
 		if (inventory[i] && inventory[i]->getType() == type)
 			return (inventory[i]->clone());
 	}
-	return (nullptr);
+	return (NULL);
 }

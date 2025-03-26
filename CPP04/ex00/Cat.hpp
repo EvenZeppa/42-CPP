@@ -8,9 +8,9 @@ public:
 	Cat();
 	Cat(Cat& cat);
 	Cat& operator=(Cat& cat);
-	~Cat() override;
+	~Cat();
 
-	void	makeSound() override;
+	void	makeSound();
 };
 
 #endif

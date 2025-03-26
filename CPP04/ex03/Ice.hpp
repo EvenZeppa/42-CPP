@@ -10,10 +10,10 @@ public:
 	Ice();
 	Ice(Ice& ice);
 	Ice& operator=(Ice& ice);
-	~Ice() override;
+	~Ice();
 
-	AMateria* clone() const override;
-	void use(ICharacter& target) override;
+	AMateria* clone() const;
+	void use(ICharacter& target);
 };
 
 #endif

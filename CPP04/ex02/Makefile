@@ -1,5 +1,5 @@
 CCPP = c++
-CPPFLAGS = -g -Wall -Wextra -Werror
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 SRCS = main.cpp AAnimal.cpp Dog.cpp Cat.cpp Brain.cpp
 NAME = abstract
 

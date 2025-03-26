@@ -4,7 +4,7 @@ Character::Character(std::string name) : name(name)
 {
 	std::cout << "Character default constructor called" << std::endl;
 	for (int i = 0; i < 4; i++)
-		inventory[i] = nullptr;
+		inventory[i] = NULL;
 }
 
 Character::Character(Character& character) : name(character.name)
@@ -15,7 +15,7 @@ Character::Character(Character& character) : name(character.name)
 		if (character.inventory[i])
 			inventory[i] = character.inventory[i]->clone();
 		else
-			inventory[i] = nullptr;
+			inventory[i] = NULL;
 	}
 }
 
@@ -30,7 +30,7 @@ Character& Character::operator=(Character& character)
 		if (character.inventory[i])
 			inventory[i] = character.inventory[i]->clone();
 		else
-			inventory[i] = nullptr;
+			inventory[i] = NULL;
 	}
 
 	return (*this);
@@ -64,7 +64,7 @@ void Character::equip(AMateria* m)
 void Character::unequip(int idx)
 {
 	if (idx >= 0 && idx < 4)
-		inventory[idx] = nullptr;
+		inventory[idx] = NULL;
 }
 
 void Character::use(int idx, ICharacter& target)

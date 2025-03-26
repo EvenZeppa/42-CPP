@@ -11,9 +11,9 @@ public:
 	Dog();
 	Dog(Dog& dog);
 	Dog& operator=(Dog& dog);
-	~Dog() override;
+	~Dog();
 
-	void	makeSound() override;
+	void	makeSound();
 };
 
 #endif

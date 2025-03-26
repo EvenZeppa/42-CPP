@@ -9,10 +9,10 @@ public:
 	Cure();
 	Cure(Cure& cure);
 	Cure& operator=(Cure& cure);
-	~Cure() override;
+	~Cure();
 
-	AMateria* clone() const override;
-	void use(ICharacter& target) override;
+	AMateria* clone() const;
+	void use(ICharacter& target);
 };
 
 #endif
