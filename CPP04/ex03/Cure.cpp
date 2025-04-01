@@ -5,7 +5,7 @@ Cure::Cure() : AMateria("cure")
 	std::cout << "Cure default constructor called" << std::endl;
 }
 
-Cure::Cure(Cure& cure) : AMateria(cure.type)
+Cure::Cure(const Cure& cure) : AMateria(cure.type)
 {
 	std::cout << "Cure copy constructor called" << std::endl;
 }
@@ -24,7 +24,7 @@ Cure::~Cure()
 
 AMateria* Cure::clone() const
 {
-	return (new Cure());
+	return (new Cure(*this));
 }
 
 void Cure::use(ICharacter& target)

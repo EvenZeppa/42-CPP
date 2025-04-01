@@ -63,8 +63,15 @@ void Character::equip(AMateria* m)
 
 void Character::unequip(int idx)
 {
-	if (idx >= 0 && idx < 4)
-		inventory[idx] = NULL;
+	if (idx >= 0 && idx < 4) {
+		if (inventory[idx])
+		{
+			delete inventory[idx];
+			inventory[idx] = NULL;
+		}
+	}
+	else
+		std::cout << "Invalid index" << std::endl;
 }
 
 void Character::use(int idx, ICharacter& target)

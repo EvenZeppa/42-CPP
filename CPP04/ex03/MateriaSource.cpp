@@ -39,8 +39,10 @@ MateriaSource::~MateriaSource()
 {
 	std::cout << "MateriaSource destructor called" << std::endl;
 	for (int i = 0; i < 4; i++)
-		if (inventory[i])
+		if (inventory[i]) {
 			delete inventory[i];
+			inventory[i] = NULL;
+		}
 }
 
 void MateriaSource::learnMateria(AMateria* m)

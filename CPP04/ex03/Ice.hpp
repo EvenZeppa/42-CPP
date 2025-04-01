@@ -8,7 +8,7 @@ class ICharacter;
 class Ice : public AMateria {
 public:
 	Ice();
-	Ice(Ice& ice);
+	Ice(const Ice& ice);
 	Ice& operator=(Ice& ice);
 	~Ice();
 

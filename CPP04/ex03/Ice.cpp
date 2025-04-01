@@ -5,7 +5,7 @@ Ice::Ice() : AMateria("ice")
 	std::cout << "Ice default constructor called" << std::endl;
 }
 
-Ice::Ice(Ice& ice) : AMateria(ice.type)
+Ice::Ice(const Ice& ice) : AMateria(ice.type)
 {
 	std::cout << "Ice copy constructor called" << std::endl;
 }
@@ -24,7 +24,7 @@ Ice::~Ice()
 
 AMateria* Ice::clone() const
 {
-	return (new Ice());
+	return (new Ice(*this));
 }
 
 void Ice::use(ICharacter& target)
