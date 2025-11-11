@@ -19,6 +19,8 @@ int main() {
 	std::cout << formA << std::endl;
 	Form formB("Form B", 20, 30);
 	std::cout << formB << std::endl;
+	Form formC("Form C", 1, 1);
+	std::cout << formB << std::endl;
 	try {
 		Form formC("Form C", 0, 0);
 	} catch (const std::exception &e) {
@@ -35,6 +37,13 @@ int main() {
 		std::cerr << "Exception: " << e.what() << std::endl;
 	}
 	std::cout << std::endl;
+	
+	try {
+		jack.signForm(formC);
+	} catch (const std::exception &e) {
+		std::cerr << "Exception: " << e.what() << std::endl;
+	}
+	std::cout << std::endl;
 
 	// Test Bureaucrat and Form states
 	std::cout << "\033[0;31m" << "Bureaucrat and Form states !!!" << "\033[0m" << std::endl;
@@ -43,6 +52,7 @@ int main() {
 	std::cout << jack << std::endl;
 	std::cout << formA << std::endl;
 	std::cout << formB << std::endl;
+	std::cout << formC << std::endl;
 	std::cout << std::endl;
 
     return 0;
