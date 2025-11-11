@@ -6,6 +6,8 @@
 # include <exception>
 # include "Bureaucrat.hpp"
 
+class Bureaucrat;
+
 class AForm {
 public:
 	AForm(std::string name, int signGrade, int execGrade);
@@ -19,7 +21,8 @@ public:
 	int getExecGrade() const;
 
 	void beSigned(const Bureaucrat& bureaucrat);
-	virtual void execute(const Bureaucrat& executor) const = 0;
+	virtual void execute(const Bureaucrat& executor) const;
+	virtual void doExecution() const = 0;
 
 	class GradeTooHighException : public std::exception {
 		public:

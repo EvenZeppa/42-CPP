@@ -1,49 +1,24 @@
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 
 int main() {
-	// Test Bureaucrat functionality
-	std::cout << "\033[0;31m" << "Creating Bureaucrats !!!" << "\033[0m" << std::endl;
-	
-	Bureaucrat john("John", 50);
-	std::cout << john << std::endl;
-	Bureaucrat jane("Jane", 150);
-	std::cout << jane << std::endl;
-	Bureaucrat jack("Jack", 1);
-	std::cout << jack << std::endl;
-	std::cout << std::endl;
+	std::srand((unsigned)time(NULL));
 
-	// Test Form functionality
-	std::cout << "\033[0;31m" << "Creating Forms !!!" << "\033[0m" << std::endl;
-	Form formA("Form A", 50, 100);
-	std::cout << formA << std::endl;
-	Form formB("Form B", 20, 30);
-	std::cout << formB << std::endl;
-	try {
-		Form formC("Form C", 0, 0);
-	} catch (const std::exception &e) {
-		std::cerr << "Exception: " << e.what() << std::endl;
-	}
-	std::cout << std::endl;
+	Bureaucrat b1("Le V", 150);
+	Bureaucrat b2("EVNE LE GOAR", 1);
 
-	// Test signing forms
-	std::cout << "\033[0;31m" << "Signing Forms !!!" << "\033[0m" << std::endl;
-	try {
-		formA.beSigned(john);
-		formB.beSigned(jane);
-	} catch (const std::exception &e) {
-		std::cerr << "Exception: " << e.what() << std::endl;
-	}
-	std::cout << std::endl;
+	ShrubberyCreationForm f1("f1");
+	RobotomyRequestForm f2("f2");
+	PresidentialPardonForm f3("f3");
 
-	// Test Bureaucrat and Form states
-	std::cout << "\033[0;31m" << "Bureaucrat and Form states !!!" << "\033[0m" << std::endl;
-	std::cout << john << std::endl;
-	std::cout << jane << std::endl;
-	std::cout << jack << std::endl;
-	std::cout << formA << std::endl;
-	std::cout << formB << std::endl;
-	std::cout << std::endl;
+	b2.signForm(f1);
+	b2.signForm(f2);
+	b2.signForm(f3);
 
+	f1.execute(b2);
+	f2.execute(b2);
+	b2.executeForm(f3);
     return 0;
 }
