@@ -1,7 +1,7 @@
 CCPP = c++
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
-SRCS = main.cpp Bureaucrat.cpp Form.cpp
-NAME = aform
+SRCS = *.cpp
+NAME = intern
 
 all: $(NAME)
 
