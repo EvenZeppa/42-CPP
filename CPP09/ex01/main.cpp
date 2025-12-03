@@ -89,6 +89,22 @@ int main() {
 	try {
 		rpn5.process("7 9 5 4 3 2 1 8 0 + - * / + - * /");
 		std::cout << rpn5.result() << std::endl;
+		rpn5.clear();
+
+		rpn5.process("8 9 * 9 - 9 - 9 - 4 - 1 +");
+		std::cout << rpn5.result() << std::endl;
+		rpn5.clear();
+
+		rpn5.process("7 7 * 7 -");
+		std::cout << rpn5.result() << std::endl;
+		rpn5.clear();
+
+		rpn5.process("1 2 * 2 / 2 * 2 4 - +");
+		std::cout << rpn5.result() << std::endl;
+		rpn5.clear();
+
+		rpn5.process("(1 + 1)");
+		std::cout << rpn5.result() << std::endl;
 	} catch (std::exception& e) { 
 		std::cout << e.what() << std::endl;
 	}
