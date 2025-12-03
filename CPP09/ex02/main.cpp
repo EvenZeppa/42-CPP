@@ -76,12 +76,16 @@ unsigned int jacobsthal(unsigned int prev, unsigned int secondPrev) {
 }
 
 void insertBackleft(vui& list, vui::iterator& it, unsigned int value) {
+	if (it == list.begin()) {
+		list.insert(it, value);
+		return;
+	}
 	while (value < *it && it != list.begin()) {
 		// std::cout << "insertBackleft() :: START *it => " << *it << " -> " << value << std::endl;
 		--it;
 		// std::cout << "insertBackleft() :: END *it => " << *it << std::endl;
 	}
-	if (it != list.begin() && value < *it)
+	if (it != list.begin() || (value > *it))
 		++it;
 	list.insert(it, value);
 	// std::cout << "insertBackleft() :: list => ";
@@ -93,7 +97,7 @@ void insertLoosers(vui& winners, const vpui& loosers) {
 	unsigned int jnCurrent = 1;
 	unsigned int jnTemp = 0;
 
-	while (jnCurrent <= loosers.size()) {
+	while (jnTemp < loosers.size()) {
 		jnCurrent = jacobsthal(jnCurrent, jnPrev);
 		std::cout << "insertLoosers() :: START jnS => " << jnPrev << " -> " << jnCurrent << " -> " << jnTemp << std::endl;
 		for (unsigned int j = jnCurrent; j > jnTemp; j--) {
