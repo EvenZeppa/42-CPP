@@ -1,10 +1,11 @@
 # 🛠 Compilateur et flags
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = 
+# CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 LDFLAGS =
 
 # 🏆 Nom du projet
-PROJECT_NAME = RPN
+PROJECT_NAME = PmergeMe
 
 # 🖥️ Détection de l'OS
 UNAME_S := $(shell uname -s)
