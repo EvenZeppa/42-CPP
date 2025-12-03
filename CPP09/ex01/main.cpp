@@ -3,6 +3,7 @@
 #include <exception>
 
 int main() {
+	std::cout << "==== RPN ====" << std::endl;
 	RPN rpn;
 	RPN rpnA(rpn);
 	rpnA.str("1 2 +");
@@ -18,6 +19,7 @@ int main() {
 	rpn.clear();
 	std::cout << rpn << std::endl;
 
+	std::cout << std::endl << "==== RPN1 ====" << std::endl;
 	RPN rpn1("2 4 6 * +");
 	try {
 		rpn1.process();
@@ -26,29 +28,33 @@ int main() {
 		std::cout << e.what() << std::endl;
 	}
 
+	std::cout << std::endl << "==== RPN2 ====" << std::endl;
 	RPN rpn2;
 	try {
 		// @TODO ADD pushElements(T*)
-		rpn2.push(5);
-		rpn2.push(2);
+		rpn2.push(25.0f);
+		rpn2.push(12.0f);
 
 		rpn2.sum();
 
-		rpn2.push(7);
+		rpn2.push(9.0f);
 		rpn2.sub();
 
-		rpn2.push(3);
-		rpn2.push(1);
+		rpn2.push(3.0f);
+		rpn2.push(1.0f);
+		std::cout << rpn2 << std::endl;
 
 		rpn2.mul();
 		rpn2.div();
 
+		std::cout << rpn2 << std::endl;
 		std::cout << rpn2.result() << std::endl;
 		std::cout << rpn2.pop() << std::endl;
 	} catch (std::exception& e) { 
 		std::cout << e.what() << std::endl;
 	}
 
+	std::cout << std::endl << "==== RPN3 ====" << std::endl;
 	RPN rpn3;
 	try {
 		rpn3.process("4 1");
@@ -60,17 +66,29 @@ int main() {
 		std::cout << e.what() << std::endl;
 	}
 
+	std::cout << std::endl << "==== RPN4 ====" << std::endl;
 	RPN rpn4;
 	try {
 		// Not a number
 		rpn4.process("1 adidas 2 +");
 		// Dividing by 0
-		rpn4.process("0 3 /");
+		rpn4.process("3 0 /");
 		// 2 args in stack -> impossible
 		rpn4.process("0 3");
 		std::cout << rpn4.result() << std::endl;
 		// Not enough args in stack during binary operation
 		rpn4.process("0 +");
+	} catch (std::exception& e) { 
+		std::cout << e.what() << std::endl;
+	}
+
+	
+	std::cout << std::endl << "==== RPN5 ====" << std::endl;
+	RPN rpn5;
+
+	try {
+		rpn5.process("7 9 5 4 3 2 1 8 0 + - * / + - * /");
+		std::cout << rpn5.result() << std::endl;
 	} catch (std::exception& e) { 
 		std::cout << e.what() << std::endl;
 	}

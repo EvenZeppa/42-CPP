@@ -3,9 +3,9 @@
 binary RPN::_binaryAccess() {
 	if (_stack.size() <= 1)
 		throw RPN::StackIsEmptyException();
-	int right = _stack.top();
+	float right = _stack.top();
 	_stack.pop();
-	int left = _stack.top();
+	float left = _stack.top();
 	_stack.pop();
 
 	return binary(left, right);
@@ -21,7 +21,8 @@ RPN::RPN(const RPN& other) : _stack(other._stack), _str(other._str) {
 }
 
 RPN& RPN::operator=(const RPN& other) {
-	(void) other;
+	_stack = other._stack;
+	_str = other._str;
 	return *this;
 }
 
@@ -35,14 +36,19 @@ std::string RPN::str() {
 	return _str;
 }
 
-void RPN::push(int n) {
+int RPN::size() {
+	return _stack.size();
+}
+
+
+void RPN::push(float n) {
 	_stack.push(n);
 }
 
-int RPN::pop() {
+float RPN::pop() {
 	if (_stack.size() == 0)
 		throw RPN::StackIsEmptyException();
-	int n = _stack.top();
+	float n = _stack.top();
 	_stack.pop();
 	return n;
 }
@@ -52,11 +58,46 @@ void RPN::clear() {
 		_stack.pop();
 }
 
-void RPN::process(const std::string& str) {
-	(void) str;
+void RPN::_processToken(const std::string& token) {
+	if (token.size() == 1 && token[0] == '+')
+		sum();
+	else if (token.size() == 1 && token[0] == '-')
+		sub();
+	else if (token.size() == 1 && token[0] == '*')
+		mul();
+	else if (token.size() == 1 && token[0] == '/')
+		div();
+	else {
+		float n = std::atof(token.c_str());
+		if (n == 0 && (token.size() > 1 || token[0] != '0'))
+			throw RPN::InvalidTypeException();
+		push(n);
+	}
 }
 
-int RPN::result() {
+void RPN::_process() {
+	size_t pos;
+	while ((pos = _str.find(' ', 0)) != std::string::npos) {
+		std::string token = _str.substr(0, pos);
+		_processToken(token);
+		_str = _str.substr(pos + 1, _str.size() - pos);
+	}
+	if (_str.size() > 0) {
+		_processToken(_str);
+		_str = "";
+	}
+}
+
+void RPN::process(const std::string& str) {
+	_str = str;
+	_process();
+}
+
+void RPN::process() {
+	_process();
+}
+
+float RPN::result() {
 	if (_stack.size() == 0)
 		throw RPN::StackIsEmptyException();
 	if (_stack.size() > 1)
@@ -65,7 +106,13 @@ int RPN::result() {
 }
 
 std::ostream& operator<<(std::ostream &os, const RPN& rpn) {
-	(void) rpn;
+	RPN copy(rpn);
+
+	os << "[";
+	while (copy.size() > 0) {
+		os << copy.pop() << (copy.size() > 0 ? "," : "");
+	}
+	os << "]";
 	return os;
 }
 

@@ -4,15 +4,18 @@
 #include <stack>
 #include <ostream>
 #include <stdexcept>
+#include <cstdlib>
 
-typedef std::pair<int, int> binary;
+typedef std::pair<float, float> binary;
 
 class RPN {
 private:
-	std::stack<int> _stack;
+	std::stack<float> _stack;
 	std::string _str;
 
+	void _processToken(const std::string& token);
 	binary _binaryAccess();
+	void _process();
 public:
 	RPN();
 	RPN(const std::string& str);
@@ -23,13 +26,16 @@ public:
 	void str(const std::string& str);
 	std::string str();
 
-	void push(int n);
-	int pop();
+	int size();
+
+	void push(float n);
+	float pop();
 
 	void clear();
 
 	void process(const std::string& str);
-	int result();
+	void process();
+	float result();
 
 	friend std::ostream& operator<<(std::ostream &os, const RPN& rpn);
 
