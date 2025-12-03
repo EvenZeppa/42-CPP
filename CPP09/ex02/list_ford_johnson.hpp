@@ -134,9 +134,6 @@ static void insertLosers(lui& winners, const lpui& losers)
 				continue;
 
 			insertBackLeft(winners, wpos, element.first);
-
-			if (std::distance(losers.begin(), loserIt) == (int)Jprev)
-				break;
 		}
 
 		Jprev = Jnext;
