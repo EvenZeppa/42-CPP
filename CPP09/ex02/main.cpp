@@ -1,165 +1,127 @@
-#include <vector>
 #include <iostream>
+#include <vector>
+#include <list>
 #include <string>
-#include <algorithm>
+#include <sys/time.h>
+
+#include "vector_ford_johnson.hpp"
+#include "list_ford_johnson.hpp"
 
 #define RESET   "\033[0m"
-#define RED     "\033[31m"      /* Red */
-#define GREEN   "\033[32m"      /* Green */
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
 
 typedef std::vector<unsigned int> vui;
-typedef std::pair<unsigned int, unsigned int> p;
-typedef std::vector<p> vpui;
+typedef std::list<unsigned int>   lui;
 
-void printVectorVui(const vui& v) {
-	std::cout << "[";
-
-	vui::const_iterator it;
-	for (it = v.begin(); it != v.end(); ++it) {
-		std::cout << GREEN << *it << RESET << ", ";
-	}
-
-	std::cout << RESET << "]" << std::endl << std::endl;
+/*
+** Time in microseconds
+*/
+static long getMicroseconds()
+{
+    timeval tv;
+    gettimeofday(&tv, NULL);
+    return tv.tv_sec * 1000000L + tv.tv_usec;
 }
 
-void printVectorVpui(const vpui& v) {
-	std::cout << "[";
-
-	vpui::const_iterator it;
-	for (it = v.begin(); it != v.end(); ++it) {
-		std::cout << RED << (*it).first << RESET << "<->" << GREEN << (*it).second << RED << ", ";
-	}
-
-	std::cout << "]" << std::endl << std::endl << RESET;
+/*
+** Print vector
+*/
+static void printVector(const vui& v)
+{
+    std::cout << "[";
+    for (size_t i = 0; i < v.size(); i++) {
+        std::cout << GREEN << v[i] << RESET;
+        if (i + 1 < v.size())
+            std::cout << ", ";
+    }
+    std::cout << "]\n\n";
 }
 
-vui extractWinners(const vui& list) {	
-	vui winners;
-
-	vui::const_iterator it;
-	for (it = list.begin(); it != list.end(); ++it) {
-		int first = *it;
-		++it;
-		if (it == list.end()) {
-			winners.push_back(first);
-			break;
-		}
-		int second = *it;
-		winners.push_back(first > second ? first : second);
-	}
-	return winners;
+/*
+** Print list
+*/
+static void printList(const lui& l)
+{
+    std::cout << "[";
+    lui::const_iterator it = l.begin();
+    while (it != l.end()) {
+        std::cout << GREEN << *it << RESET;
+        ++it;
+        if (it != l.end())
+            std::cout << ", ";
+    }
+    std::cout << "]\n\n";
 }
 
-vpui extractloosers(const vui& list) {
-	vpui loosers;
-	if (list.size() == 0)
-		return loosers;
+int main(int argc, char* argv[])
+{
+    if (argc <= 1) {
+        std::cerr << "Need at least 1 number.\n";
+        return 1;
+    }
 
-	vui::const_iterator it;
-	for (it = list.begin(); it != list.end(); ++it) {
-		unsigned int first = *it;
-		++it;
-		if (it == list.end()) {
-			return loosers;
-		}
-		unsigned int second = *it;
-		p pair;
-		pair.first = first > second ? second : first;
-		pair.second = first > second ? first : second;
-		loosers.push_back(pair);
-	}
-	return loosers;
-}
+    vui vectorList;
+    lui listList;
 
-unsigned int jacobsthal(unsigned int prev, unsigned int secondPrev) {
-	return (prev + 2 * secondPrev);
-}
+    // Parse arguments
+    for (int i = 1; i < argc; i++) {
+        long n = atol(argv[i]);
+        if (n < 0) {
+            std::cerr << "Invalid number: only unsigned int allowed.\n";
+            return 2;
+        }
+        vectorList.push_back((unsigned int)n);
+        listList.push_back((unsigned int)n);
+    }
 
-void insertBackleft(vui& list, vui::iterator& it, unsigned int value) {
-	if (it == list.begin()) {
-		list.insert(it, value);
-		return;
-	}
-	while (value < *it && it != list.begin()) {
-		// std::cout << "insertBackleft() :: START *it => " << *it << " -> " << value << std::endl;
-		--it;
-		// std::cout << "insertBackleft() :: END *it => " << *it << std::endl;
-	}
-	if (it != list.begin() || (value > *it))
-		++it;
-	list.insert(it, value);
-	// std::cout << "insertBackleft() :: list => ";
-	// printVectorVui(list);
-}
+    std::cout << "\n===== INPUT =====\n";
+    printVector(vectorList);
 
-void insertLoosers(vui& winners, const vpui& loosers) {
-	unsigned int jnPrev = 0;
-	unsigned int jnCurrent = 1;
-	unsigned int jnTemp = 0;
+    /*
+    ** =============================
+    **      VECTOR FORD–JOHNSON
+    ** =============================
+    */
+    long startVec = getMicroseconds();
+    vui sortedVector = fordJohnson(vectorList);
+    long endVec = getMicroseconds();
 
-	while (jnTemp < loosers.size()) {
-		jnCurrent = jacobsthal(jnCurrent, jnPrev);
-		std::cout << "insertLoosers() :: START jnS => " << jnPrev << " -> " << jnCurrent << " -> " << jnTemp << std::endl;
-		for (unsigned int j = jnCurrent; j > jnTemp; j--) {
-			if (j > loosers.size())
-				j = loosers.size();
-			p pair = loosers.at(j - 1);
-			std::cout << "insertLoosers() :: pair => " << pair.first << "<->" << pair.second << std::endl;
+    std::cout << "===== VECTOR RESULT =====\n";
+    printVector(sortedVector);
 
-			// @TODO ERROR si je veux
-			vui::iterator wit = std::find(winners.begin(), winners.end(), pair.second);
-			insertBackleft(winners, wit, pair.first);
-		// std::cout << "insertLoosers() :: END jnS => " << jnPrev << " -> " << jnCurrent << " -> " << jnTemp << std::endl;
-		}
-		jnPrev = jnTemp;
-		jnTemp = jnCurrent;
-	}
-}
+    long timeVec = endVec - startVec;
+    std::cout << "Time to process " << vectorList.size()
+              << " elements with std::vector : "
+              << timeVec << " µs\n\n";
 
-vui fordJohnson(const vui& list) {
-	vui winners = extractWinners(list);
-	// std::cout << "fordJohnson() :: winners => ";
-	// printVectorVui(winners);
-	vpui loosers = extractloosers(list);
-	std::cout << "fordJohnson() :: loosers => ";
-	printVectorVpui(loosers);
-	if (winners.size() > 1) {
-		winners = fordJohnson(winners);
-		std::cout << "fordJohnson() :: SORTED winners => ";
-		printVectorVui(winners);
-	}
-	insertLoosers(winners, loosers);
-	return winners;
-}
 
-int main(int argc, char* argv[]) {
-	if (argc == 1) {
-		std::cerr << "Need 2 args minimum" << std::endl;
-		return 1;
-	}
-	// Build vector list with args
-	vui list;
-	for (int i = 1; i < argc; i++) {
-		long n = atol(argv[i]);
-		if (n == 0 && (argv[i][1] != '\0' || argv[i][0] != '0')) {
-			std::cerr << "Argument invalid, only unsigned int" << std::endl;
-			return 2;
-		}
-		list.push_back(static_cast<unsigned int>(n));
-	}
+    /*
+    ** =============================
+    **        LIST FORD–JOHNSON
+    ** =============================
+    */
+    long startList = getMicroseconds();
+    lui sortedList = fordJohnson(listList);
+    long endList = getMicroseconds();
 
-	std::cout << "Unsorted list : " << std::endl;
-	printVectorVui(list);
-	
-	// Recursive function to sorte given list
-	list = fordJohnson(list);
+    std::cout << "===== LIST RESULT =====\n";
+    printList(sortedList);
 
-	std::cout << "Sorted list : " << std::endl;
-	printVectorVui(list);
+    long timeList = endList - startList;
+    std::cout << "Time to process " << listList.size()
+              << " elements with std::list : "
+              << timeList << " µs\n\n";
 
-	// vui::iterator it;
-	// for (it = list.begin(); it < list.end(); ++it)
-	// 	std::cout << *it << std::endl;
 
-	return 0;
+    /*
+    ** =============================
+    **       PERFORMANCE SUMMARY
+    ** =============================
+    */
+    std::cout << "===== SUMMARY =====\n";
+    std::cout << "Vector : " << timeVec  << " µs\n";
+    std::cout << "List   : " << timeList << " µs\n\n";
+
+    return 0;
 }

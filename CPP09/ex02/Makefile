@@ -1,7 +1,6 @@
 # 🛠 Compilateur et flags
 CXX = c++
-CXXFLAGS = 
-# CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 LDFLAGS =
 
 # 🏆 Nom du projet
