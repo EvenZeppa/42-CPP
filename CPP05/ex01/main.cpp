@@ -39,7 +39,7 @@ int main() {
 	std::cout << std::endl;
 	
 	try {
-		jack.signForm(formC);
+		jane.signForm(formC);
 	} catch (const std::exception &e) {
 		std::cerr << "Exception: " << e.what() << std::endl;
 	}
