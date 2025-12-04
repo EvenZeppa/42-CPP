@@ -11,18 +11,18 @@ binary RPN::_binaryAccess() {
 	return binary(left, right);
 }
 
-RPN::RPN() : _str("") {}
+RPN::RPN() : _str(""), _numbers(0) {}
 
-RPN::RPN(const std::string& str) : _str(str) {}
+RPN::RPN(const std::string& str) : _str(str), _numbers(0) {}
 
-// #TODO tester si on doit refill la stack au lieu de la copier
-RPN::RPN(const RPN& other) : _stack(other._stack), _str(other._str) {
+RPN::RPN(const RPN& other) : _stack(other._stack), _str(other._str), _numbers(other._numbers) {
 	(void) other;
 }
 
 RPN& RPN::operator=(const RPN& other) {
 	_stack = other._stack;
 	_str = other._str;
+	_numbers = other._numbers;
 	return *this;
 }
 
@@ -56,6 +56,7 @@ float RPN::pop() {
 void RPN::clear() {
 	while (_stack.size() > 0)
 		_stack.pop();
+	_numbers = 0;
 }
 
 void RPN::_processToken(const std::string& token) {
@@ -72,6 +73,9 @@ void RPN::_processToken(const std::string& token) {
 		if (n == 0 && (token.size() > 1 || token[0] != '0'))
 			throw RPN::InvalidTypeException();
 		push(n);
+		_numbers++;
+		if (_numbers > MAX_NUMBERS)
+			throw RPN::TooManyNumbersException();
 	}
 }
 
@@ -161,4 +165,8 @@ const char* RPN::InvalidBinaryStackException::what() const throw() {
 
 const char* RPN::StackIsEmptyException::what() const throw() {
 	return "Stack is empty";
+}
+
+const char* RPN::TooManyNumbersException::what() const throw() {
+	return "Too many numbers in process";
 }

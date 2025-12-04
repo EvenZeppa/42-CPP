@@ -8,10 +8,15 @@
 
 typedef std::pair<float, float> binary;
 
+#ifndef MAX_NUMBERS
+	#define MAX_NUMBERS 9
+#endif
+
 class RPN {
 private:
 	std::stack<float> _stack;
 	std::string _str;
+	int _numbers;
 
 	void _processToken(const std::string& token);
 	binary _binaryAccess();
@@ -65,6 +70,11 @@ public:
 	};
 
 	class StackIsEmptyException : public std::exception {
+		public:
+			const char* what() const throw();
+	};
+
+	class TooManyNumbersException : public std::exception {
 		public:
 			const char* what() const throw();
 	};
